@@ -17,14 +17,23 @@ module.exports = {
   },
 
   onStart: async function ({ event, message, usersData }) {
-    const userData = await usersData.get(event.senderID);
-    const name = userData.name || "Éveillé inconnu";
+  const userData = await usersData.get(event.senderID) || {};
+  userData.banking ??= { balance: 0 };
 
-    // Initialiser un compte si inexistant
-    if (!userData.banking) {
-      userData.banking = { balance: 0 };
-      await usersData.set(event.senderID, userData);
-    }
+  // Met à jour le profil si le coffre est nouveau
+  await usersData.set(event.senderID, userData);
+
+  const name = userData.name || "Éveillé inconnu";
+  const fcfa = userData.banking.balance.toLocaleString("fr-FR");
+
+  return message.reply(
+    `💳 *Banque des Éveillés – Coffre de :* ${name}\n` +
+    `━━━━━━━━━━━━━━━━━━\n` +
+    `💰 *Solde actuel* : ${fcfa} FCFA\n` +
+    `🔐 *Gardé dans l'Ombre du Donjon* 🩸`
+  );
+}
+
 
     const balance = userData.banking.balance || 0;
     const fcfa = balance.toLocaleString("fr-FR");
