@@ -27,7 +27,7 @@ module.exports = {
 
 		const filePath = __dirname + `/${fileName}.js`;
 		if (!fs.existsSync(filePath)) {
-			return api.sendMessage(File not found: ${fileName}.js, event.threadID, event.messageID);
+			return api.sendMessage(`File not found: ${fileName}.js`, event.threadID, event.messageID);
 		}
 
 		const fileContent = fs.readFileSync(filePath, 'utf8');
