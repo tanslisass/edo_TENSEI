@@ -1,20 +1,21 @@
 module.exports = {
   config: {
-    name: "solde",
-    version: "1.0",
-    author: "Karma",
-    role: 0,
-    shortDescription: {
-      fr: "Consulte ton solde bancaire virtuel"
-    },
-    longDescription: {
-      fr: "Affiche ton solde personnel à la Banque des Éveillés (FCFA)"
-    },
-    category: "💰 Banque",
-    guide: {
-      fr: "{pn}"
-    }
+  name: "solde",
+  version: "1.0",
+  author: "Karma",
+  role: 0,
+  shortDescription: {
+    fr: "Consulte ton solde bancaire virtuel"
   },
+  longDescription: {
+    fr: "Affiche ton solde personnel à la Banque des Éveillés (FCFA)"
+  },
+  category: "Banque", // ou "💰 Banque" si accepté
+  guide: {
+    fr: "{pn} — Affiche ton solde bancaire actuel"
+  }
+}
+,
 
   onStart: async function ({ event, message, usersData }) {
   const userData = await usersData.get(event.senderID) || {};
