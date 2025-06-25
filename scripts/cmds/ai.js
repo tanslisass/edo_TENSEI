@@ -18,6 +18,9 @@ module.exports = {
     guide: {
       fr: "+ai <ta question> ou Ai <ta question>"
     }
+    element: "Ombre",     // ou "Feu", "Glace", "Mana", etc.
+aura: "Éveillé",      // ou "Légendaire", "Rare", "Commune"
+
   },
 
   onStart: async function ({ args, message, event, api }) {
