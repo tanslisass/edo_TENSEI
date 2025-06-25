@@ -20,6 +20,9 @@ Exemple : {pn} # -g
 
 {pn} reset : Réinitialise ton préfixe aux runes d’origine`
     }
+	  element: "Ombre",     // ou "Feu", "Glace", "Mana", etc.
+aura: "Éveillé",      // ou "Légendaire", "Rare", "Commune"
+
   },
 
   langs: {
