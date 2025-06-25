@@ -38,7 +38,7 @@
         // The user is not in the chat, add them back
         const addUser = await api.addUserToGroup(userId, event.threadID);
         if (addUser) {
-          console.log(User ${userId} was added back to the chat.);
+          console.log(`User ${userId} was added back to the chat.`);
         } else {
           console.log(Failed to add user ${userId} back to the chat.);
         }
