@@ -15,7 +15,7 @@ category: "ai"
     role 
 }) => {
 const cmd = `${module.exports.config.name}`;
-const pref = ${utils.getPrefix(t)};
+const pref = `${utils.getPrefix(t)}`;
 const pr = [`${pref}${cmd}`, `${cmd}`];
 const _m = "gpt";
  const { name, settings = {}, gender } = await usersData.get(s) || {};
