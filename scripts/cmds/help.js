@@ -14,6 +14,9 @@ module.exports = {
     guide: {
       fr: "{pn} ou {pn} <commande>"
     }
+    element: "Ombre",     // ou "Feu", "Glace", "Mana", etc.
+aura: "Éveillé",      // ou "Légendaire", "Rare", "Commune"
+
   },
 
   onStart: async function ({ args, commands, message }) {
