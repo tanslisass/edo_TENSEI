@@ -36,6 +36,15 @@ module.exports = {
     response += `━━━━━━━━━━━━━━━━━━━━━━\n`;
     response += `📜 Utilise \`${prefix}help <nom>\` pour les détails d’une aptitude\n`;
     response += `༒ Grimoire forgé par : ʚɸɞ Tānslīsãss Kãrmä ʚɸɞ`;
+	  const prefixBlock =
+  `📖 *Préfixe mystique d'activation* :\n` +
+  `   ╭────────────⭓\n` +
+  `   │ ⚙️ Sceau actuel : \`${prefix}\`\n` +
+  `   │ 🗡️ Usage : \`${prefix}help\`, \`${prefix}banque\`, \`${prefix}quête\`, etc.\n` +
+  `   ╰────────────⭓\n\n`;
+
+response = response.replace("🌑", `🌑\n${prefixBlock}`);
+
 
     message.reply(response);
   }
