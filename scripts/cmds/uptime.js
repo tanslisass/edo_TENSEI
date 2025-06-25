@@ -26,16 +26,16 @@ aliases: ["upt"],
       const minutes = Math.floor((uptime % 3600) / 60);
       const seconds = Math.floor(uptime % 60);
       
-      const uptimeString = '${hours}Hrs ${minutes}min ${seconds}sec';
+      const uptimeString = `${hours}Hrs ${minutes}min ${seconds}sec`;
 
 
 
 /*  api.sendMessage(⏰ | Bot running time\n☞ ${uptimeString}\n\n👪 | Total Users\n☞ ${allUsers.length}\n🌸 | Total threads\n☞ ${allThreads.length}, event.threadID);
 */
 
-
-      
-      api.sendMessage(🕰️ | [Statut du Chasseur]\n↳ En ligne depuis : ${uptimeString}
+const message = 
+`🕰️ | [Statut du Chasseur]
+↳ En ligne depuis : ${uptimeString}
 
 👤 | [Nombre d'Éveillés Interagis]
 ↳ ${allUsers.length} utilisateurs marqués
@@ -43,7 +43,10 @@ aliases: ["upt"],
 🌐 | [Champs de bataille ouverts]
 ↳ ${allThreads.length} salons actifs
 
-🔮 Le système se renforce à chaque invocation, event.threadID);
+🔮 Le système se renforce à chaque invocation.`;
+
+      
+      api.sendMessage(message, event.threadID);
 
 
 
