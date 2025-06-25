@@ -1,0 +1,43 @@
+module.exports = {
+  config: {
+    name: "join",
+    version: "1.1",
+    author: "Crepin & Copilot",
+    role: 2, // uniquement accessible aux admins déclarés dans config.json
+    shortDescription: {
+      fr: "Invoque l'admin dans un groupe (Solo Leveling style)"
+    },
+    longDescription: {
+      fr: "Permet à l’administrateur d’être ajouté dans un groupe via son UID, si le bot y est déjà présent."
+    },
+    category: "⚙️ Outils admin",
+    guide: {
+      fr: "{pn} <UID_du_groupe>"
+    }
+  },
+
+  onStart: async function ({ api, event, args }) {
+    const { ADMINBOT } = global.GoatBot.config; // 💡 récupère les UID admins depuis config.json
+    const isAdmin = ADMINBOT.includes(event.senderID);
+
+    if (!isAdmin) {
+      return api.sendMessage("❌ Cette commande est réservée aux Monarques du système.", event.threadID);
+    }
+
+    const targetGroupID = args[0];
+    if (!targetGroupID || isNaN(targetGroupID)) {
+      return api.sendMessage("📌 Syntaxe : .join <UID_du_groupe>", event.threadID);
+    }
+
+    try {
+      await api.addUserToGroup(event.senderID, targetGroupID);
+      return api.sendMessage(
+        `🩸 Portail ouvert...\n🧭 Le Monarque a été projeté dans le champ de bataille n°${targetGroupID}.`,
+        event.threadID
+      );
+    } catch (err) {
+      console.error("Erreur d'invocation :", err);
+      return api.sendMessage("⚠️ Impossible de t’ajouter. Le bot doit être présent ET autorisé dans le groupe.", event.threadID);
+    }
+  }
+};
