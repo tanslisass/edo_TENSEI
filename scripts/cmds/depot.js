@@ -21,6 +21,9 @@ module.exports = {
 
     if (isNaN(montant) || montant <= 0) {
       return message.reply("📌 Montant invalide.\n💡 Utilisation : .dépôt <montant>");
+      userData.banking.balance += montant;
+await usersData.set(event.senderID, userData);
+
     }
 
     const userData = await usersData.get(event.senderID);
