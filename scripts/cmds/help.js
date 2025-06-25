@@ -1,3 +1,68 @@
+const { commands, aliases } = global.GoatBot;
+const { getPrefix } = global.utils;
+
+module.exports = {
+  config: {
+    name: "help",
+    version: "1.2",
+    author: "Karma",
+    role: 0,
+    shortDescription: { fr: "Grimoire des Commandes disponibles" },
+    longDescription: { fr: "Affiche les aptitudes classées par catégorie pour tous les Chasseurs" },
+    category: "🧾 Système",
+    guide: { fr: "{pn}" }
+  },
+
+  onStart: async function ({ message, event }) {
+    const prefix = getPrefix(event.threadID);
+    const allCommands = Array.from(commands.values());
+    const byCat = {};
+
+    for (const cmd of allCommands) {
+      const cat = cmd.config.category || "Divers";
+      if (!byCat[cat]) byCat[cat] = [];
+      byCat[cat].push(cmd.config.name);
+    }
+
+    const sortedCategories = Object.keys(byCat).sort();
+    let body = `🌑 *Grimoire des Éveillés — Invocation des Aptitudes*\n`;
+    body += `━━━━━━━━━━━━━━━━━━━━━━\n`;
+
+    for (const cat of sortedCategories) {
+      const cmds = byCat[cat].sort((a, b) => a.localeCompare(b));
+      body += `📚 *${cat.toUpperCase()}*\n`;
+      body += cmds.map(cmd => `🔸 \`${prefix}${cmd}\``).join("  |  ") + "\n\n";
+    }
+
+    body += `━━━━━━━━━━━━━━━━━━━━━━\n`;
+    body += `📜 Pour consulter les détails d’une aptitude : \`${prefix}help <nom>\`\n`;
+    body += `༒ *Grimoire forgé par : ʚɸɞ Tānslīsãss Kãrmä ʚɸɞ*`;
+
+    message.reply(body);
+  }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 const fs = require("fs-extra");
 const axios = require("axios");
 const path = require("path");
@@ -9,7 +74,8 @@ const doNotDelete = "[ 🐐 | Goat Bot V2 ]";
 * @author: do not delete it
 * @message if you delete or edit it you will get a global ban
 */
-
+           
+         		/*
 module.exports = {
 	config: {
 		name: "help",
@@ -407,3 +473,8 @@ function cropContent(content, max) {
 	}
 	return content;
 }
+
+				*/
+
+
+
