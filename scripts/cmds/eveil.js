@@ -15,6 +15,9 @@ module.exports = {
     guide: {
       fr: "{pn}"
     }
+    element: "Ombre",     // ou "Feu", "Glace", "Mana", etc.
+aura: "Éveillé",      // ou "Légendaire", "Rare", "Commune"
+
   },
 
   onStart: async function ({ api, event, usersData }) {
