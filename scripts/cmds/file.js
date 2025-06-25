@@ -25,7 +25,7 @@ module.exports = {
 			return api.sendMessage("Please provide a file name.", event.threadID, event.messageID);
 		}
 
-		const filePath = __dirname + '/${fileName}.js';
+		const filePath = __dirname + `/${fileName}.js`;
 		if (!fs.existsSync(filePath)) {
 			return api.sendMessage(File not found: ${fileName}.js, event.threadID, event.messageID);
 		}
