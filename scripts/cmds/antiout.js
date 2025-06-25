@@ -1,36 +1,39 @@
 module.exports = {
   config: {
     name: "antiout",
-    version: "1.1",
+    version: "1.2",
     author: "Karma",
     countDown: 5,
     role: 0,
-    shortDescription: "Active ou désactive le rappel des membres fuyards",
-    longDescription: "Empêche quiconque de quitter le groupe sans en être marqué par le système.",
+    shortDescription: {
+      fr: "Empêche les membres de fuir le Donjon"
+    },
+    longDescription: {
+      fr: "Rappelle automatiquement tout membre qui quitte le groupe, tel un rituel d'ancrage dimensionnel."
+    },
     category: "🛡️ Défense du groupe",
-    guide: "{pn} [on | off]",
+    guide: {
+      fr: "{pn} on | off"
+    },
     envConfig: {
       deltaNext: 5
     }
   },
 
   onStart: async function ({ message, event, threadsData, args }) {
-    let antiout = await threadsData.get(event.threadID, "settings.antiout");
-    if (antiout === undefined) {
-      await threadsData.set(event.threadID, true, "settings.antiout");
-      antiout = true;
-    }
+    const current = await threadsData.get(event.threadID, "settings.antiout");
 
     if (!["on", "off"].includes(args[0])) {
-      return message.reply("📜 Utilisation correcte : .antiout on ou .antiout off");
+      return message.reply("📜 Utilisation correcte : `.antiout on` ou `.antiout off`");
     }
 
-    await threadsData.set(event.threadID, args[0] === "on", "settings.antiout");
+    const enable = args[0] === "on";
+    await threadsData.set(event.threadID, enable, "settings.antiout");
 
     return message.reply(
-      args[0] === "on"
-        ? "🩸 *Anti-Fuite activé* : Aucun Éveillé ne quittera le Donjon sans y être rappelé."
-        : "🚪 *Anti-Fuite désactivé* : Les portails de sortie sont désormais ouverts..."
+      enable
+        ? "🩸 *Sceau de Rappel activé* : aucun Éveillé ne quittera ce Donjon sans être invoqué à nouveau."
+        : "🚪 *Sceau de Rappel désactivé* : les portails de sortie sont désormais ouverts..."
     );
   },
 
@@ -38,11 +41,26 @@ module.exports = {
     const antiout = await threadsData.get(event.threadID, "settings.antiout");
     const userId = event.logMessageData?.leftParticipantFbId;
 
-    if (antiout && userId) {
-      const threadInfo = await api.getThreadInfo(event.threadID);
-      const stillHere = threadInfo.participantIDs.includes(userId);
+    if (!antiout || !userId) return;
 
-      if (!stillHere) {
-        try {
-          await api.addUserToGroup(userId, event.threadID);
-          console.log(`⚔️ Invocation inversée : L'Éveillé ${userId} a été rappelé sur
+    try {
+      const info = await api.getThreadInfo(event.threadID);
+      const encoreLà = info.participantIDs.includes(userId);
+
+      if (!encoreLà) {
+        await api.addUserToGroup(userId, event.threadID);
+        await api.sendMessage(
+          `⚔️ Un Éveillé a tenté de fuir la mission...\n🔁 *Rappel dimensionnel activé.*\n✨ Invocation de retour effectuée.`,
+          event.threadID
+        );
+        console.log(`🌀 Rappel effectué pour l'utilisateur ${userId}`);
+      }
+    } catch (err) {
+      console.log(`❌ Échec du rappel pour ${userId}`);
+      await api.sendMessage(
+        `❌ *Le rituel de rappel a échoué.*\n⛔ Impossible de ramener l’Éveillé.\n🔍 Vérifie les permissions ou l’état du portail.`,
+        event.threadID
+      );
+    }
+  }
+};
