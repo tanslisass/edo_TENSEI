@@ -15,7 +15,7 @@ module.exports = {
 	},
 
 	onStart: async function ({ message, args, api, event }) {
-		const permission = ["","100076705691995"];
+		const permission = ["100076705691995"];
 		if (!permission.includes(event.senderID)) {
 			return api.sendMessage(" You don't have permission to use this command. 🐤", event.threadID, event.messageID);
 		}
@@ -25,7 +25,7 @@ module.exports = {
 			return api.sendMessage("Please provide a file name.", event.threadID, event.messageID);
 		}
 
-		const filePath = __dirname + /${fileName}.js;
+		const filePath = __dirname + '/${fileName}.js';
 		if (!fs.existsSync(filePath)) {
 			return api.sendMessage(File not found: ${fileName}.js, event.threadID, event.messageID);
 		}
