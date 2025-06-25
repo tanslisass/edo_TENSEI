@@ -86,15 +86,25 @@ Exemple : {pn} # -g
     }
   },
 
-  onChat: async function ({ event, message, getLang }) {
-    if (event.body?.toLowerCase() === "prefix") {
-      return message.reply(getLang(
-        "myPrefix",
-        global.GoatBot.config.prefix,
-        utils.getPrefix(event.threadID)
-      ));
-    }
+ onChat: async function ({ event, message }) {
+  if (event.body?.toLowerCase() === "prefix") {
+    const globalPrefix = global.GoatBot.config.prefix;
+    const localPrefix = utils.getPrefix(event.threadID);
+
+    const reply = 
+      `🔮 *Sceau d’Invocation détecté...*\n` +
+      `━━━━━━━━━━━━━━━━━━━━━━\n` +
+      `🌐 Préfixe global : \`${globalPrefix}\`\n` +
+      `🏰 Préfixe de ce Donjon : \`${localPrefix}\`\n` +
+      `━━━━━━━━━━━━━━━━━━━━━━\n` +
+      `⚙️ Utilise le préfixe pour déclencher tes rituels :\n` +
+      `   \`${localPrefix}help\`, \`${localPrefix}banque\`, \`${localPrefix}quête\`, ...\n\n` +
+      `༒ Gardien du Sceau : ʚɸɞ Tānslīsãss Kãrmä ʚɸɞ`;
+
+    return message.reply(reply);
   }
+}
+
 };
 
 
