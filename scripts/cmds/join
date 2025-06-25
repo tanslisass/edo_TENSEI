@@ -2,7 +2,7 @@ module.exports = {
   config: {
     name: "join",
     version: "1.1",
-    author: "Crepin & Copilot",
+    author: "Karma",
     role: 2, // uniquement accessible aux admins déclarés dans config.json
     shortDescription: {
       fr: "Invoque l'admin dans un groupe (Solo Leveling style)"
@@ -17,7 +17,7 @@ module.exports = {
   },
 
   onStart: async function ({ api, event, args }) {
-    const { ADMINBOT } = global.GoatBot.config; // 💡 récupère les UID admins depuis config.json
+    const { ADMINBOT } = global.GoatBot.config;
     const isAdmin = ADMINBOT.includes(event.senderID);
 
     if (!isAdmin) {
