@@ -26,9 +26,9 @@ aliases: ["upt"],
       const minutes = Math.floor((uptime % 3600) / 60);
       const seconds = Math.floor(uptime % 60);
       
-      const uptimeString = `${hours}Hrs ${minutes}min ${seconds}sec`;
+      const uptimeString = ${hours}Hrs ${minutes}min ${seconds}sec;
       
-      api.sendMessage(`⏰ | Bot running time\n☞ ${uptimeString}\n\n👪 | Total Users\n☞ ${allUsers.length}\n🌸 | Total threads\n☞ ${allThreads.length}`, event.threadID);
+      api.sendMessage(⏰ | Bot running time\n☞ ${uptimeString}\n\n👪 | Total Users\n☞ ${allUsers.length}\n🌸 | Total threads\n☞ ${allThreads.length}, event.threadID);
     } catch (error) {
       console.error(error);
       api.sendMessage("An error occurred while retrieving data.", event.threadID);
