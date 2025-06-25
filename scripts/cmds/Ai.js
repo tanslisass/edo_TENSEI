@@ -14,7 +14,7 @@ category: "ai"
     globalData,
     role 
 }) => {
-const cmd = '${module.exports.config.name}';
+const cmd = `${module.exports.config.name}`;
 const pref = ${utils.getPrefix(t)};
 const pr = [`${pref}${cmd}`, `${cmd}`];
 const _m = "gpt";
