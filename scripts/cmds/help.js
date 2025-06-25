@@ -1,4 +1,4 @@
-const { commands, aliases } = global.GoatBot;
+const { commands } = global.GoatBot;
 const { getPrefix } = global.utils;
 
 module.exports = {
@@ -8,7 +8,7 @@ module.exports = {
     author: "Karma",
     role: 0,
     shortDescription: { fr: "Grimoire des Commandes disponibles" },
-    longDescription: { fr: "Affiche les aptitudes classées par catégorie pour tous les Chasseurs" },
+    longDescription: { fr: "Affiche les aptitudes classées par catégorie pour tous les Éveillés" },
     category: "🧾 Système",
     guide: { fr: "{pn}" }
   },
@@ -16,31 +16,31 @@ module.exports = {
   onStart: async function ({ message, event }) {
     const prefix = getPrefix(event.threadID);
     const allCommands = Array.from(commands.values());
-    const byCat = {};
+    const byCategory = {};
 
     for (const cmd of allCommands) {
-      const cat = cmd.config.category || "Divers";
-      if (!byCat[cat]) byCat[cat] = [];
-      byCat[cat].push(cmd.config.name);
+      const category = cmd.config.category || "Divers";
+      if (!byCategory[category]) byCategory[category] = [];
+      byCategory[category].push(cmd.config.name);
     }
 
-    const sortedCategories = Object.keys(byCat).sort();
-    let body = `🌑 *Grimoire des Éveillés — Invocation des Aptitudes*\n`;
-    body += `━━━━━━━━━━━━━━━━━━━━━━\n`;
+    let response = `🌑 *Grimoire des Aptitudes – Éveil des Commandes*\n`;
+    response += `━━━━━━━━━━━━━━━━━━━━━━\n`;
 
-    for (const cat of sortedCategories) {
-      const cmds = byCat[cat].sort((a, b) => a.localeCompare(b));
-      body += `📚 *${cat.toUpperCase()}*\n`;
-      body += cmds.map(cmd => `🔸 \`${prefix}${cmd}\``).join("  |  ") + "\n\n";
+    for (const cat of Object.keys(byCategory).sort()) {
+      const cmds = byCategory[cat].sort((a, b) => a.localeCompare(b));
+      response += `📚 *${cat.toUpperCase()}*\n`;
+      response += cmds.map(name => `🔹 \`${prefix}${name}\``).join("\n") + "\n\n";
     }
 
-    body += `━━━━━━━━━━━━━━━━━━━━━━\n`;
-    body += `📜 Pour consulter les détails d’une aptitude : \`${prefix}help <nom>\`\n`;
-    body += `༒ *Grimoire forgé par : ʚɸɞ Tānslīsãss Kãrmä ʚɸɞ*`;
+    response += `━━━━━━━━━━━━━━━━━━━━━━\n`;
+    response += `📜 Utilise \`${prefix}help <nom>\` pour les détails d’une aptitude\n`;
+    response += `༒ Grimoire forgé par : ʚɸɞ Tānslīsãss Kãrmä ʚɸɞ`;
 
-    message.reply(body);
+    message.reply(response);
   }
 };
+
 
 
 
