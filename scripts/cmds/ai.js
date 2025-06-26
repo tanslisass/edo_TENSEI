@@ -15,8 +15,6 @@ module.exports = {
     guide: {
       fr: "+ai <ta question>"
     },
-    aura: "Rare",
-    element: "Ombre"
   },
 
   onStart: async function ({ args, message, event, api }) {
