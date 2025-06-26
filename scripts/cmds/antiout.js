@@ -1,66 +1,48 @@
 module.exports = {
   config: {
     name: "antiout",
-    version: "1.2",
-    author: "Karma",
+    version: "1.0",
+    author: "AceGun",
     countDown: 5,
     role: 0,
-    shortDescription: {
-      fr: "Empêche les membres de fuir le Donjon"
-    },
-    longDescription: {
-      fr: "Rappelle automatiquement tout membre qui quitte le groupe, tel un rituel d'ancrage dimensionnel."
-    },
-    category: "🛡️ Défense du groupe",
-    guide: {
-      fr: "{pn} on | off"
-    },
+    shortDescription: "Enable or disable antiout",
+    longDescription: "",
+    category: "box chat",
+    guide: "{pn} {{[on | off]}}",
     envConfig: {
       deltaNext: 5
     }
   },
-
-  onStart: async function ({ message, event, threadsData, args }) {
-    const current = await threadsData.get(event.threadID, "settings.antiout");
-
-    if (!["on", "off"].includes(args[0])) {
-      return message.reply("📜 Utilisation correcte : `.antiout on` ou `.antiout off`");
+  onStart: async function({ message, event, threadsData, args }) {
+    let antiout = await threadsData.get(event.threadID, "settings.antiout");
+    if (antiout === undefined) {
+      await threadsData.set(event.threadID, true, "settings.antiout");
+      antiout = true;
     }
-
-    const enable = args[0] === "on";
-    await threadsData.set(event.threadID, enable, "settings.antiout");
-
-    return message.reply(
-      enable
-        ? "🩸 *Sceau de Rappel activé* : aucun Éveillé ne quittera ce Donjon sans être invoqué à nouveau."
-        : "🚪 *Sceau de Rappel désactivé* : les portails de sortie sont désormais ouverts..."
-    );
+    if (!["on", "off"].includes(args[0])) {
+      return message.reply("Please use 'on' or 'off' as an argument");
+    }
+    await threadsData.set(event.threadID, args[0] === "on", "settings.antiout");
+    return message.reply(`Antiout has been ${args[0] === "on" ? "enabled" : "disabled"}.`);
   },
-
-  onEvent: async function ({ api, event, threadsData }) {
+  onEvent: async function({ api, event, threadsData }) {
     const antiout = await threadsData.get(event.threadID, "settings.antiout");
-    const userId = event.logMessageData?.leftParticipantFbId;
+    if (antiout && event.logMessageData && event.logMessageData.leftParticipantFbId) {
+      // A user has left the chat, get their user ID
+      const userId = event.logMessageData.leftParticipantFbId;
 
-    if (!antiout || !userId) return;
-
-    try {
-      const info = await api.getThreadInfo(event.threadID);
-      const encoreLà = info.participantIDs.includes(userId);
-
-      if (!encoreLà) {
-        await api.addUserToGroup(userId, event.threadID);
-        await api.sendMessage(
-          `⚔️ Un Éveillé a tenté de fuir la mission...\n🔁 *Rappel dimensionnel activé.*\n✨ Invocation de retour effectuée.`,
-          event.threadID
-        );
-        console.log(`🌀 Rappel effectué pour l'utilisateur ${userId}`);
+      // Check if the user is still in the chat
+      const threadInfo = await api.getThreadInfo(event.threadID);
+      const userIndex = threadInfo.participantIDs.indexOf(userId);
+      if (userIndex === -1) {
+        // The user is not in the chat, add them back
+        const addUser = await api.addUserToGroup(userId, event.threadID);
+        if (addUser) {
+          console.log(`My Lord,  ${userId} was added back to the chat 💗`);
+        } else {
+          console.log(`Failed to add user ${userId} back to the chat.`);
+        }
       }
-    } catch (err) {
-      console.log(`❌ Échec du rappel pour ${userId}`);
-      await api.sendMessage(
-        `❌ *Le rituel de rappel a échoué.*\n⛔ Impossible de ramener l’Éveillé.\n🔍 Vérifie les permissions ou l’état du portail.`,
-        event.threadID
-      );
     }
   }
 };
