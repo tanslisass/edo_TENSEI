@@ -99,22 +99,16 @@ module.exports = {
 			roleText1setRole: "1 (set role, quản trị viên nhóm)",
 			pageNotFound: "Trang %1 không tồn tại"
 		},
-		en: {
-			help: "╭─────────────⭓"
-				+ "\n%1"
-				+ "\n├─────⭔"
-				+ "\n│ Page [ %2/%3 ]"
-				+ "\n│ Currently, the bot has %4 commands that can be used"
-				+ "\n│ » Type %5help <page> to view the command list"
-				+ "\n│ » Type %5help to view the details of how to use that command"
-				+ "\n├────────⭔"
-				+ "\n│ %6"
-				+ "\n╰─────────────⭓",
-			help2: "%1├───────⭔"
-				+ "\n│ » Currently, the bot has %2 commands that can be used"
-				+ "\n│ » Type %3help <command name> to view the details of how to use that command"
-				+ "\n│ %4"
-				+ "\n╰─────────────⭓",
+		fr: {
+			help: "👁️ Codex éveillé — Reliques enregistrées\n━━━━━━━━━━━━━━━━━━━━━━\n%1\n├─────⭓\n│ 📜 Page [ %2/%3 ]\n│ 📂 Reliques disponibles : %4\n│ 🧠 Tape %5help <page> pour révéler d’autres sceaux\n│ 🔍 Tape %5help <commande> pour décrypter sa puissance\n╰────────────⭓\n🩸 Codex interprété par : ʚɸɞ Tānslīsãss Kãrmä ʚɸɞ",
+
+    help2: "%1├───────⭓\n│ 📂 Total des artefacts disponibles : %2\n│ 🧠 Invoque %3help <nom> pour lire sa gravure\n╰────────────⭓\n🩸 Sceau validé par : ʚɸɞ Tānslīsãss Kãrmä ʚɸɞ",
+    
+    onlyCategory: "📚 *Sceau filtré :* %1",
+    onlyRole: "⚠️ Tu dois disposer d’un grade supérieur pour consulter cette relique.",
+    onlyCommand: "📜 *Fragment gravé :* %1",
+    onlyUsage: "🔮 *Formule d’invocation :* %1",
+    onlyAuthor: "✍️ *Forgeron de l’artefact :* %1",
 			commandNotFound: "Command \"%1\" does not exist",
 			getInfoCommand: "╭── NAME ────⭓"
 				+ "\n│ %1"
