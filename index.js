@@ -36,3 +36,8 @@ function startProject() {
 }
 
 startProject();
+const PORT = process.env.PORT || 3000;
+require('http').createServer().listen(PORT, () => {
+  console.log(`[⚔️] Edo_TENSEI est à l'écoute sur le port ${PORT}`);
+});
+
